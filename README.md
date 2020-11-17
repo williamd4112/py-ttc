@@ -31,3 +31,7 @@ python examples/run_ttc.py --src Bike_Helmet.avi \
         --vis --use-multiscale
 ```
 ![Bike_Helmet_GIF](Bike_Helmet.gif)
+
+
+# Reference
+- https://github.com/aamini/TimeToContact.jl

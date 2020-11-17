@@ -32,6 +32,21 @@ python examples/run_ttc.py --src Bike_Helmet.avi \
 ```
 ![Bike_Helmet_GIF](Bike_Helmet.gif)
 
+```
+python examples/run_ttc.py --src Newman4.avi \
+        --dst Newman4.csv \
+        --dst-gif Newman4.gif \
+        --vis --use-multiscale --filter-outlier
+```
+![Bike_Helmet_GIF](Newman4.gif)
+
+```
+python examples/run_ttc.py --src Tipper3.avi \
+        --dst Tipper3.csv \
+        --dst-gif Tipper3.gif \
+        --vis --use-multiscale --filter-outlier
+```
+![Bike_Helmet_GIF](Tipper3.gif)
 
 # Reference
 - https://github.com/aamini/TimeToContact.jl

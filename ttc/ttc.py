@@ -41,18 +41,12 @@ def _solve_abc(Ex, Ey, Et, GG):
 
 def _compute_Ex(E):
     Ex = np.zeros_like(E)
-    m, n = E.shape
-    for i in range(m - 1):
-        for j in range(n):
-            Ex[i][j] = E[i + 1][j] - E[i][j]
+    Ex[:-1, :] = E[1:, :] - E[:-1, :]
     return Ex
 
 def _compute_Ey(E):
     Ey = np.zeros_like(E)
-    m, n = E.shape
-    for i in range(m):
-        for j in range(n - 1):
-            Ey[i][j] = E[i][j + 1] - E[i][j]
+    Ey[:, :-1] = E[:, 1:] - E[:, :-1]
     return Ey
 
 def _compute_Et(E1, E2):
@@ -60,12 +54,13 @@ def _compute_Et(E1, E2):
 
 def _compute_G(Ex, Ey):
     m, n = Ex.shape
-    G = np.zeros_like(Ex)
     ci, cj = m // 2, n // 2
-    for i in range(m):
-        for j in range(n):
-            G[i][j] = (i - ci) * Ex[i][j] + (j - cj) * Ey[i][j]
-    return G
+
+    X, Y = np.mgrid[0:m, 0:n]
+    Xp = X - ci # (i - ci)
+    Yp = Y - cj # (j - cj)
+    
+    return np.multiply(Xp, Ex) + np.multiply(Yp, Ey)
 
 def solve_ttc(img1, img2):
     Ex = restrict(_compute_Ex(img2), 1)

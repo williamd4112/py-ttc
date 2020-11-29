@@ -1,4 +1,5 @@
 import argparse
+import time
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -70,16 +71,18 @@ if __name__ == '__main__':
         frame = uniform_blur(frame, args.size)
 
         if prev_frame is not None:
+            start_time = time.time()
             if args.use_multiscale:
                 T, x0, y0, Ex, Ey, Et, v = solve_ttc_multiscale(prev_frame, frame)
             else:
                 T, x0, y0, Ex, Ey, Et, v = solve_ttc(prev_frame, frame)
+            elapsed_time = time.time() - start_time
 
             if args.filter_outlier and (T > 1e5 or T < 0):
                continue
 
             logger.log(T, x0 + (n) / 2, y0 + (m) / 2, v[0][0], v[1][0], v[2][0])
-            print('TTC = {}; FoE = {}; A = {:2f}, B = {:2f}, C = {:2f}'.format(T, 
+            print('Elapsed time = {} sec; TTC = {}; FoE = {}; A = {:2f}, B = {:2f}, C = {:2f}'.format(elapsed_time, T, 
                                     (x0 + (n) / 2, y0 + (m) / 2),
                                     v[0][0], v[1][0], v[2][0]))
 

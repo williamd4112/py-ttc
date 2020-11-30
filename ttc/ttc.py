@@ -68,7 +68,9 @@ def solve_ttc(img1, img2):
     Et = restrict(_compute_Et(img1, img2), 1)
     G = _compute_G(Ex, Ey)
     v = _solve_abc(Ex, Ey, Et, G)
-
+    
+    if v[2] == 0:
+        raise ZeroDivisionError
     x0 = -v[0] / v[2]
     y0 = -v[1] / v[2]
     T = 1 / v[2]
